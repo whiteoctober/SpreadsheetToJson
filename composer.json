@@ -2,7 +2,7 @@
     "require": {
   		"google/apiclient": "1.0.*@beta",
         
-        "asimlqt/php-google-spreadsheet-client": "2.3.*"
+  		"asimlqt/php-google-spreadsheet-client": "2.3.*"
 	}
     
     

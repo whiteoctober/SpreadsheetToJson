@@ -3,7 +3,7 @@ A handy tool for converting Google Spreadsheets into Json data
 
 ## Setup
 
-To use this tool you'll need to create a Google Developer account at https://developers.google.com/
+To use this tool you'll need to create a Google Developer account at https://console.developers.google.com
 and also require a service account inside of the console.
   
 Inside of Google Developer Console you'll first need to create a new project. Once your project has been created, 

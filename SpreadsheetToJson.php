@@ -23,14 +23,17 @@ class SpreadsheetToJson{
 		}else if(!isset($spreadsheetUrl)){
 			throw new Exception("No spreadsheet URL set");
 		}
-		
+		if(!is_readable($p12file)){
+			throw new Exception("p12 file is un-readable, please change the file permissions");
+		}
+
 		$googleKey = file_get_contents($p12file);
 		$scope = array('https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive');
 		
 		$credentials = new Google_Auth_AssertionCredentials($serviceEmail, $scope, $googleKey);
 		
 		$client = new Google_Client();
-		$client->setApplicationName($applicationName);
+		$client->setApplicationName($this->applicationName);
 		$client->setAssertionCredentials($credentials);
 		
 	
@@ -57,17 +60,21 @@ class SpreadsheetToJson{
 		
 		$spreadsheet = $spreadsheetService->getSpreadsheetById($spreadsheetId);
 		
-		$json = array();
-		
+
+		$worksheets = array();
+
 		foreach($spreadsheet->getWorksheets() as $entry){
+			$rows = array();
 			$listFeed = $entry->getListFeed();
+
 			foreach($listFeed->getEntries() as $listFeedEntry){
 				$value = $listFeedEntry->getValues();
 				
-				$json[] = $value;
+				$rows[] = $value;
 			}
+			$worksheets[] = $rows;
 		}
-		return $json;
+		return $worksheets;
 	}
 	
 	static function convertSpreadsheetUrlToId($url){
